@@ -1,12 +1,11 @@
-FROM node:24-alpine AS builder
+FROM node:24-alpine
 
 WORKDIR /app
 
 COPY package.json package-lock.json* ./
-RUN --mount=type=cache,target=/root/.npm npm ci
+RUN npm ci
 
 COPY . .
 
-RUN npm run build
-
 EXPOSE 4200
+CMD ["npm", "start", "--", "--host", "0.0.0.0"]
